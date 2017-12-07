@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>APICurious</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%if current_user %>
+      <h1 class="name"><%= current_user.name %></h1>
+    <% else %>
+      <h1 class="name"><%= link_to "Login", github_login_path %></h1>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<div >
+    <%= image_tag current_user.profile_picture %>
+    <h1><%= current_user.username %></h1>
+    <h2><%= current_user.email %></h2>
+</div>
+
+<% @repositories.each do |repo| %>
+<div class=".trip-card">
+  <ul>
+    <li><%= repo.name %></li>
+    <li><%= repo.full_name %></li>
+    <li><%= repo.stargazers_count %></li>
+    <li><%= repo.watchers_count %></li>
+    <li><%= repo.language %></li>
+  </ul>
+</div>
+<%end %>
