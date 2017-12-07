@@ -25,10 +25,26 @@ class GithubService
     end
   end
 
+  def parse_repositories(repository_array)
+    repository_array.map do |repository|
+      retrieve_recent_commits(repository)
+    end
+  end
+
   def extract_full_user_info(user)
     response = conn.get("/users/#{object[:login]}?access_token=#{current_user.token}")
     data = JSON.parse(response.body, symbolize_names: true)
     create_other_user(data)
+  end
+
+  def retrieve_recent_commits(repository)
+    response = @conn.get("/repos/#{user.username}/#{repository.name}/stats/participation?access_token=#{user.token}")
+    data = JSON.parse(response.body, symbolize_names: true)
+    create_commit_objects(data, repository.name)
+  end
+
+  def create_commit_objects(data, repository)
+    Commit.new(data, repository) unless data.empty? || data[:owner][-1] == 0
   end
 
   def create_repos(repositories)
